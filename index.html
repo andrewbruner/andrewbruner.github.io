@@ -7,16 +7,22 @@
 
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        
+        <!-- Style to darken project images on hover -->
+        <style>
+            a img:hover {
+                opacity: .5;
+            }
+        </style>
 
         <title>Andrew Bruner | Web Developer</title>
     </head>
     <body>
-        <div class="jumbotron jumbotron-fluid">
+        <main role="main">
+        <div class="jumbotron">
             <div class="container">
                 <h1 class="display-4">Andrew Bruner</h1>
-                <p class="lead">I'm a web developer and Treehouse Techdegree student.</p>
-                <hr class="my-4">
-                <p>Do you need a website?</p>
+                <p class="lead mb-4">Web Developer and Treehouse Techdegree Student.</p>
                 <a class="btn btn-primary btn-lg" href="https://twitter.com/messages/compose?recipient_id=14549287&text=" role="button">Contact me</a>
             </div>
         </div>
@@ -24,7 +30,7 @@
             <h2 class="mb-4">Projects</h2>
             <div class="card-group">
               <div class="card">
-                <a href="fsjs-techdegree-unit-01" target="_blank"><img src="media/unit-01.png" class="card-img-top" alt="Screenshot of A Random Quote Generator Project"></a>
+                <a href="fsjs-techdegree-unit-01" target="_blank"><img src="media/unit-01.png" class="card-img-top" style="" alt="Screenshot of A Random Quote Generator Project"></a>
                 <div class="card-body">
                   <h5 class="card-title">A Random Quote Generator</h5>
                   <p class="card-text">This project displays a quote and changes the background color at random every time the user clicks a button. This also works on a 20 second interval.</p>
@@ -55,6 +61,11 @@
               </div>
             </div>
         </div><!-- /.container -->
+        </main>
+        
+        <footer class="container">
+            <p class="mt-5"><small>&copy; 2020 Andrew Bruner</small></p>
+        </footer>
         
         <!-- Optional JavaScript -->
         <!-- jQuery first, then Popper.js, then Bootstrap JS -->
