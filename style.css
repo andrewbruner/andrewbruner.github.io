@@ -1,0 +1,36 @@
+html {
+  scroll-behavior: smooth;
+}
+
+#projects-section,
+#contact-section {
+  height: 100vh;
+}
+
+.jumbotron {
+  padding-top: 40vh;
+  height: 100vh;
+}
+
+#about,
+#projects,
+#contact {
+  padding-left: 1rem;
+  padding-top: 105px;
+  margin-top: -75px;
+}
+
+#about-section .container,
+#projects-section .container,
+#contact-section .container {
+  margin-bottom: 2rem;
+}
+
+#about-profile {
+  height: 12.5rem;
+}
+
+#about-profile-section {
+  height: 200px;
+  padding-left: 13.5rem;
+}
