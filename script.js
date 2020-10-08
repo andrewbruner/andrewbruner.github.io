@@ -1,13 +1,6 @@
-const App = () => (
-  <div>
-    <NavBar />
-    <About />
-    <Projects />
-    <Contact />
-  </div>
-);
-
-ReactDOM.render(
-  <App />,
-  document.querySelector('.root')
-);
+const app = new Vue({
+    el: '#app',
+    data: {
+      message: 'Hello World!'
+    }
+  })
