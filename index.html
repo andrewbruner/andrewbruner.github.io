@@ -17,9 +17,22 @@
   <body>
     <!-- Vue App -->
     <div>
-      <b-navbar variant="faded" type="light">
-        <b-navbar-brand tag="h1" class="mb-0">Andrew Bruner</b-navbar-brand>
-      </b-navbar>
+      <b-jumbotron>
+        <template v-slot:header>Andrew Bruner</template>
+    
+        <template v-slot:lead>
+          Front-end development is at the intersection of art and logic. A cross of business and exprression. Both left and right brain. A cocktail of design and nerdery. (Chris Coyier)
+        </template>
+    
+        <hr class="my-4">
+    
+        <p>
+          Hello. I'm a Front-end Web and JavaScript Developer. I bridge the gap between design and functionality, creation and continuity.
+        </p>
+    
+        <b-button variant="primary" href="https://twitter.com/andrewbruner">Contact Me</b-button>
+        <b-button variant="success" href="https://www.linkedin.com/in/andrewjbruner">Hire Me</b-button>
+      </b-jumbotron>
     </div>
   </body>
 </html>
