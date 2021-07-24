@@ -36,10 +36,68 @@
         <li><a href="https://github.com/andrewbruner/fsjs-techdegree-unit-10">Full Stack App with React and REST API</a></li>
     </section>
     <section id="weblog">
+      <h2>Weblog</h2>
+      <ul>
+      </ul>
     </section>
   </main>
   <footer>
     <small>&copy; Andrew Bruner</small>
   </footer>
+
+  <!-- Script to insert weblog posts -->
+  <script>
+    let url = "https://api.hashnode.com";
+    let query = `
+      query {
+        user(username: "andrewbruner") {
+          publication {
+            posts(page: 0) {
+              title
+              slug
+              dateAdded
+              brief
+            }
+          }
+        }
+      }`;
+    let params = {
+      method: 'post',
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        query: query,
+      }),
+    };
+
+    fetch(url, params)
+      .then(res => res.json())
+      .then(data => {
+        let weblogUl = document.querySelector('#weblog ul');
+        for (let i = 0; i < 3; i++) {
+          let post = data.data.user.publication.posts[i];
+          // Post Title/Link
+          let postA = document.createElement('a');
+          postA.href = `https://andrewbruner.hashnode.dev/${post.slug}`;
+          postA.textContent = post.title;
+          let postH3 = document.createElement('h3');
+          let postLi = document.createElement('li');
+          postH3.appendChild(postA);
+          postLi.appendChild(postH3);
+          // Post Date
+          let postSmall = document.createElement('small')
+          let date = new Date(post.dateAdded).toDateString();
+          postSmall.textContent = date;
+          postLi.appendChild(postSmall);
+          // Post Brief
+          let postP = document.createElement('p');
+          postP.textContent = post.brief;
+          postLi.appendChild(postP);
+
+          weblogUl.appendChild(postLi);
+        }            
+      });
+  </script>
 </body>
 </html>
