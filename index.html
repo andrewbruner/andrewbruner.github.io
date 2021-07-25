@@ -42,7 +42,7 @@
     </section>
   </main>
   <footer>
-    <small>&copy; Andrew Bruner</small>
+    <small>&copy; <span class="currentYear"></span> Andrew Bruner</small>
   </footer>
 
   <!-- Script to insert weblog posts -->
@@ -98,6 +98,12 @@
           weblogUl.appendChild(postLi);
         }            
       });
+  </script>
+
+  <!-- Script to keep copyright date current -->
+  <script>
+    let currentYear = new Date().getFullYear();
+    document.querySelector('.currentYear').textContent = currentYear;
   </script>
 </body>
 </html>
