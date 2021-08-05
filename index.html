@@ -334,11 +334,100 @@
         </div>
       </div>
     </section>
-    
     <section id="weblog">
-      <h2>Weblog</h2>
-      <ul>
-      </ul>
+      <div class="px-4 py-16 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-20">
+        <div class="max-w-xl mb-10 md:mx-auto sm:text-center lg:max-w-2xl md:mb-12">
+          <!-- "brand new" component here -->
+          <h2 class="max-w-lg mb-6 font-sans text-3xl font-bold leading-none tracking-tight text-gray-900 sm:text-4xl md:mx-auto">
+            <span class="relative inline-block">
+              <svg viewBox="0 0 52 24" fill="currentColor" class="absolute top-0 left-0 z-0 hidden w-32 -mt-8 -ml-20 text-blue-gray-100 lg:w-32 lg:-ml-28 lg:-mt-10 sm:block">
+                <defs>
+                  <pattern id="d9d7687a-355f-4502-8ec4-7945db034688" x="0" y="0" width=".135" height=".30">
+                    <circle cx="1" cy="1" r=".7"></circle>
+                  </pattern>
+                </defs>
+                <rect fill="url(#d9d7687a-355f-4502-8ec4-7945db034688)" width="52" height="24"></rect>
+              </svg>
+              <span class="relative">Weblog</span>
+            </span> <!-- inser more text below -->
+            
+          </h2>
+          <p class="text-base text-gray-700 md:text-lg">
+            My latest posts on web development, technology and learning
+          </p>
+        </div>
+
+        <div id="posts" class="mb-10 border-t border-b divide-y">
+          <div class="grid py-8 sm:grid-cols-4">
+            <div class="mb-4 sm:mb-0">
+              <div class="space-y-1 text-xs font-semibold tracking-wide uppercase">
+                <a href="#" class="transition-colors duration-200 text-blue-accent-400 hover:text-blue-800" aria-label="Category">Frameworks</a>
+                <p class="text-gray-600"></p>
+              </div>
+            </div>
+            <div class="sm:col-span-3 lg:col-span-2">
+              <div class="mb-3">
+                <a href="#" aria-label="Article" class="inline-block text-black transition-colors duration-200 hover:text-blue-accent-700">
+                  <p class="text-3xl font-extrabold leading-none sm:text-4xl xl:text-4xl">
+                    
+                  </p>
+                </a>
+              </div>
+              <p class="text-gray-700">
+                
+              </p>
+            </div>
+          </div>
+          <div class="grid py-8 sm:grid-cols-4">
+            <div class="mb-4 sm:mb-0">
+              <div class="space-y-1 text-xs font-semibold tracking-wide uppercase">
+                <a href="/" class="transition-colors duration-200 text-blue-accent-400 hover:text-blue-800" aria-label="Category">JavaScript</a>
+                <p class="text-gray-600"></p>
+              </div>
+            </div>
+            <div class="sm:col-span-3 lg:col-span-2">
+              <div class="mb-3">
+                <a href="/" aria-label="Article" class="inline-block text-black transition-colors duration-200 hover:text-blue-accent-700">
+                  <p class="text-3xl font-extrabold leading-none sm:text-4xl xl:text-4xl">
+                    
+                  </p>
+                </a>
+              </div>
+              <p class="text-gray-700">
+                
+              </p>
+            </div>
+          </div>
+          <div class="grid py-8 sm:grid-cols-4">
+            <div class="mb-4 sm:mb-0">
+              <div class="space-y-1 text-xs font-semibold tracking-wide uppercase">
+                <a href="/" class="transition-colors duration-200 text-blue-accent-400 hover:text-blue-800" aria-label="Category">Web Development</a>
+                <p class="text-gray-600"></p>
+              </div>
+            </div>
+            <div class="sm:col-span-3 lg:col-span-2">
+              <div class="mb-3">
+                <a href="/" aria-label="Article" class="inline-block text-black transition-colors duration-200 hover:text-blue-accent-700">
+                  <p class="text-3xl font-extrabold leading-none sm:text-4xl xl:text-4xl">
+                    
+                  </p>
+                </a>
+              </div>
+              <p class="text-gray-700">
+                
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="text-center">
+          <a href="/" aria-label="" class="inline-flex items-center font-semibold transition-colors duration-200 text-blue-accent-400 hover:text-blue-800">
+            See all posts
+            <svg class="inline-block w-3 ml-2" fill="currentColor" viewBox="0 0 12 12">
+              <path d="M9.707,5.293l-5-5A1,1,0,0,0,3.293,1.707L7.586,6,3.293,10.293a1,1,0,1,0,1.414,1.414l5-5A1,1,0,0,0,9.707,5.293Z"></path>
+            </svg>
+          </a>
+        </div>
+      </div>
     </section>
   </main>
   <footer>
@@ -383,29 +472,21 @@
     fetch(url, params)
       .then(res => res.json())
       .then(data => {
-        let weblogUl = document.querySelector('#weblog ul');
-        for (let i = 0; i < 3; i++) {
-          let post = data.data.user.publication.posts[i];
-          // Post Title/Link
-          let postA = document.createElement('a');
-          postA.href = `https://andrewbruner.hashnode.dev/${post.slug}`;
-          postA.textContent = post.title;
-          let postH3 = document.createElement('h3');
-          let postLi = document.createElement('li');
-          postH3.appendChild(postA);
-          postLi.appendChild(postH3);
-          // Post Date
-          let postSmall = document.createElement('small')
-          let date = new Date(post.dateAdded).toDateString();
-          postSmall.textContent = date;
-          postLi.appendChild(postSmall);
-          // Post Brief
-          let postP = document.createElement('p');
-          postP.textContent = post.brief;
-          postLi.appendChild(postP);
+        let weblogDiv = document.querySelector('#posts');
+        let posts = data.data.user.publication.posts;
 
-          weblogUl.appendChild(postLi);
-        }            
+        for (let i = 0; i < 3; i++) {
+          let date = new Date(posts[i].dateAdded);
+          let day = date.getDate();
+          let year = date.getFullYear();
+          date = date.toDateString();
+          date = `${day} ${date.slice(4, 7)} ${year}`;
+          
+          weblogDiv.children[i].firstElementChild.firstElementChild.lastElementChild.textContent = date;
+          weblogDiv.children[i].lastElementChild.firstElementChild.firstElementChild.href = `https://andrewbruner.hashnode.dev/${posts[i].slug}`;
+          weblogDiv.children[i].lastElementChild.firstElementChild.firstElementChild.firstElementChild.textContent = posts[i].title;
+          weblogDiv.children[i].lastElementChild.lastElementChild.textContent = posts[i].brief;
+        };
       });
   </script>
 
