@@ -16,6 +16,9 @@ let query = `
           slug
           dateAdded
           brief
+          author {
+            name
+          }
         }
       }
     }
@@ -40,7 +43,7 @@ fetch(url, params)
       let year = date.getFullYear();
       date = date.toDateString();
       date = `${day} ${date.slice(4, 7)} ${year}`;
-      weblogDiv.children[i].firstElementChild.firstElementChild.lastElementChild.textContent = date;
+      weblogDiv.children[i].firstElementChild.firstElementChild.firstElementChild.textContent = date;
       weblogDiv.children[i].lastElementChild.firstElementChild.firstElementChild.href = `https://andrewbruner.hashnode.dev/${posts[i].slug}`;
       weblogDiv.children[i].lastElementChild.firstElementChild.firstElementChild.firstElementChild.textContent = posts[i].title;
       weblogDiv.children[i].lastElementChild.lastElementChild.textContent = posts[i].brief;
