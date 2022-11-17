@@ -1,0 +1,10 @@
+html {
+    background: black;
+    color: white;
+    font-family: "Helvetica Neue", sans-serif;
+}
+
+a {
+    color: silver;
+    text-decoration: none;
+}
