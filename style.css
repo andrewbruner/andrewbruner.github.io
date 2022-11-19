@@ -8,3 +8,12 @@ a {
     color: silver;
     text-decoration: none;
 }
+
+.status-content {
+    padding-left: 1rem;
+    border-left: 1px solid silver;
+}
+
+footer {
+    color: silver;
+}

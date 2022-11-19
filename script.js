@@ -1,37 +1,42 @@
-async function fetchStatuses() {
-	return await fetch('https://fosstodon.org/api/v1/accounts/109339531040776096/statuses')
-		.then(response => response.json());
-}
+const statuses = document.querySelector('.statuses');
+const heading = document.createElement('h3');
+heading.textContent = 'Latest Posts';
+statuses.append(heading);
 
-fetchStatuses()
+const url = 'https://fosstodon.org/api/v1/accounts/109339531040776096/statuses';
+
+fetch(url)
+	.then(response => response.json())
 	.then(data => {
-		console.log(data);
-		data.forEach(status => console.log(status.content));
-		const statuses = document.querySelector('.statuses');
-		const h3 = document.createElement('h3');
-		h3.textContent = 'Latest Posts';
-		statuses.append(h3);
-		data.forEach(status => {
-			if (!status.in_reply_to_account_id) {
-				let date = document.createElement('h4');
-				date.textContent = new Intl.DateTimeFormat('en-US', { month: 'long', day: 'numeric', year: 'numeric' }).format(new Date(status.created_at));
-				statuses.append(date);
-				if (status.spoiler_text) {
-					const spoiler = document.createElement('p');
-					spoiler.textContent = status.spoiler_text;
-					statuses.append(spoiler);
+		data.forEach(datum => {
+			console.log(datum);
+			if (!datum.in_reply_to_account_id) {
+				const status = document.createElement('div');
+				status.classList.add('status');
+				const date = document.createElement('h4');
+				date.classList.add('status-date');
+				const link = document.createElement('a');
+				link.href = datum.url;
+				const locales = 'en-US';
+				const options = { dateStyle: 'medium' };
+				link.textContent = new Date(datum.created_at).toLocaleDateString(locales, options);
+				date.append(link);
+				status.append(date);
+				const content = document.createElement('div');
+				content.classList.add('status-content');
+				let html = '';
+				if (datum.spoiler_text) {
+					html += `<p>${datum.spoiler_text}</p>`;
 				}
-				let content = document.createElement('p');
-				content.innerHTML = status.content;
-				statuses.append(content);
-				if (status.media_attachments.length) {
-					status.media_attachments.forEach(media => {
-						const img = document.createElement('img');
-						img.src = media.url;
-						img.setAttribute('width', '100%');
-						statuses.append(img);
+				html += datum.content;
+				if (datum.media_attachments.length) {
+					datum.media_attachments.forEach(media => {
+						html += `<img src="${media.url}" width="100%" />`;
 					});
 				}
+				content.innerHTML = html;
+				status.append(content);
+				statuses.append(status);
 			}
 		});
 	});
