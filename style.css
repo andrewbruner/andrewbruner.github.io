@@ -1,3 +1,7 @@
+.hidden {
+    display: none;
+}
+
 html {
     background: black;
     color: white;
@@ -9,9 +13,21 @@ a {
     text-decoration: none;
 }
 
+button {
+    border-color: black;
+    color: black;
+    min-width: 10rem;
+    padding: 0.5rem 1rem;
+}
+
 .status-content {
-    padding-left: 1rem;
     border-left: 1px solid silver;
+    padding-left: 1rem;
+}
+
+.spoiler-button {
+    background: silver;
+    border-radius: 1rem;
 }
 
 footer {
