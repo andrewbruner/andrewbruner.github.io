@@ -2,7 +2,7 @@
 
 ### Front-end Web and JavaScript Developer
 
-##Contact Me
+## Contact Me
 
 - [Email](mailto:andrewbruner@gmail.com)
 - [Mastodon](https://fosstodon.org/@andrewbruner)
