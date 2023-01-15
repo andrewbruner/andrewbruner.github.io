@@ -1,0 +1,288 @@
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Andrew Bruner | Building a Simple JavaScript Blockchain</title>
+    <meta name="author" content="Andrew Bruner" />
+    <meta name="description" content="Front-end web and JavaScript developer" />
+    <meta name="keywords" content="developer,web developer,front-end,javascript" />
+		<link rel="stylesheet" href="./css/prism-vsc-dark-plus.css" />
+    <link rel="stylesheet" href="https://unpkg.com/tailwindcss@2.2.19/dist/tailwind.min.css" />
+  </head>
+
+	<body class="bg-gray-100 font-sans leading-normal tracking-normal">
+		<nav id="header" class="fixed w-full z-10 top-0 bg-gray-100">
+			<div id="progress" class="h-1 z-20 top-0" style="background:linear-gradient(to right, #4dc0b5 var(--scroll), transparent 0);"></div>
+			<div class="w-full md:max-w-4xl mx-auto flex flex-wrap items-center justify-between mt-0 py-3">
+				<div class="pl-4">
+					<a class="text-gray-900 text-base no-underline hover:no-underline font-extrabold text-xl" href="/">
+						Andrew Bruner
+					</a>
+				</div>
+				<div class="block lg:hidden pr-4">
+					<button id="nav-toggle" class="flex items-center px-3 py-2 border rounded text-gray-500 border-gray-600 hover:text-gray-900 hover:border-green-500 appearance-none focus:outline-none">
+						<svg class="fill-current h-3 w-3" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+							<title>Menu</title>
+							<path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z" />
+						</svg>
+					</button>
+				</div>
+				<div class="w-full flex-grow lg:flex lg:items-center lg:w-auto hidden lg:block mt-2 lg:mt-0 bg-gray-100 md:bg-transparent z-20" id="nav-content">
+					<ul class="list-reset lg:flex justify-end flex-1 items-center">
+						<li class="mr-3">
+							<a class="inline-block py-2 px-4 text-gray-900 font-bold no-underline" href="/">Blog</a>
+						</li>
+						<li class="mr-3">
+							<a class="inline-block text-gray-600 no-underline hover:text-gray-900 hover:text-underline py-2 px-4" href="https://github.com/andrewbruner">GitHub</a>
+						</li>
+						<li class="mr-3">
+							<a class="inline-block text-gray-600 no-underline hover:text-gray-900 hover:text-underline py-2 px-4" href="https://fosstodon.org/@andrewbruner">Mastodon</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+
+		<div class="container w-full md:max-w-3xl mx-auto pt-20">
+		
+<div class="w-full px-4 md:px-6 text-xl text-gray-800 leading-normal">
+	<!--Title-->
+	<div class="font-sans">
+		<h1 class="font-bold font-sans break-normal text-gray-900 pt-6 pb-2 text-3xl md:text-4xl">Building a Simple JavaScript Blockchain</h1>
+		<p class="text-sm md:text-base font-normal text-gray-600">Published 15 August 2021</p>
+	</div>
+
+	<!--Post Content-->
+	<div class="post-content">
+		<p>When I learn about a new technology, I like to dive in deep: reading articles and documentation, watching videos, and experimenting with code. Recently, I got into blockchain technology and after wrapping my head around the initial concept, I was inspired to create my own blockchain (albeit rudimentary).</p>
+<p>If you are new to the blockchain, I highly recommend watching <a href="https://youtu.be/hYip_Vuv8J0">this video</a> where the concept is explained in five levels of difficulty. Everyone should take away something new, whether a beginner or expert.</p>
+<p>As for our introductory blockchain, we'll be using JavaScript as our programming language, and you should also be familiar working within the browser console. Let's get into it!</p>
+<h1>Setup</h1>
+<p>There is one thing about blockchain that we'll be depending on other code for: the Secure Hashing Algorithm (SHA), specifically SHA-256.</p>
+<p>In short, SHA-256 is a cryptographic &quot;hashing&quot; function that takes a string of any length and coverts it into a fixed-length 256 bit &quot;hash value&quot;. It only works one way and is therefore secure for passwords or anything you don't want someone to guess or know.</p>
+<p>SHA is a whole other subject we won't get into here, but you can find the code you need for this project <a href="https://gist.github.com/andrewbruner/4eb2310078cc923c3bfa763ff6fb61c7">here</a>.</p>
+<p>In your project directory, create a three files:</p>
+<ul>
+<li><code>index.html</code></li>
+<li><code>sha256.js</code></li>
+<li><code>blockchain.js</code></li>
+</ul>
+<p>Copy the SHA code from the link above into the <code>sha256.js</code> file. You can now close this file. We're done with it.</p>
+<p>In your <code>index.html</code> file create a basic HTML boilerplate with an empty body, or whatever you'd like to put in there. Inside the <code>&lt;body&gt;</code> tag (and preferably at the end) insert two <code>&lt;script&gt;</code> tags.</p>
+<pre class="language-html"><code class="language-html">...<br>  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>body</span><span class="token punctuation">></span></span><br><br>    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>sha256.js<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token script"></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span><br>    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>blockchain.js<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token script"></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span><br>  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>body</span><span class="token punctuation">></span></span><br><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>html</span><span class="token punctuation">></span></span></code></pre>
+<p>These tags insert the code you need for hashing your blockchain as well as the code we're about to write for the actual blockchain.</p>
+<h1>The Block Object</h1>
+<p>Opening your <code>blockchain.js</code> file, we'll start things off by writing a function to create a object representing each block of our blockchain.</p>
+<pre class="language-javascript"><code class="language-javascript"><span class="token keyword">function</span> <span class="token function">Block</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><br><br><span class="token punctuation">}</span><br></code></pre>
+<p>Inside this function we'll initialize three properties:</p>
+<ul>
+<li><code>previousHash</code>: The hash value of the previous block on the chain.</li>
+<li><code>data</code>: The data in this block.</li>
+<li><code>hash</code>: The calculated hash of this block. We'll use the code from the <code>sha256.js</code> file here.</li>
+</ul>
+<p>The final code for this function should be as follows:</p>
+<pre class="language-javascript"><code class="language-javascript"><span class="token keyword">function</span> <span class="token function">Block</span><span class="token punctuation">(</span><span class="token parameter">previousHash<span class="token punctuation">,</span> data</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><br>  <span class="token keyword">this</span><span class="token punctuation">.</span>previousHash <span class="token operator">=</span> previousHash<span class="token punctuation">;</span><br>  <span class="token keyword">this</span><span class="token punctuation">.</span>data <span class="token operator">=</span> data<span class="token punctuation">;</span><br>  <span class="token keyword">this</span><span class="token punctuation">.</span>hash <span class="token operator">=</span> <span class="token constant">SHA256</span><span class="token punctuation">(</span><span class="token constant">JSON</span><span class="token punctuation">.</span><span class="token function">stringify</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span><br><span class="token punctuation">}</span></code></pre>
+<h1>The Blockchain Object</h1>
+<p>Now we'll get to the actual blockchain object. There are several variables and methods we'll code inside this function.</p>
+<ul>
+<li><code>chain</code>: An array of block objects (the actual blockchain!)</li>
+<li><code>add()</code>: This will add a block to the blockchain.</li>
+<li><code>print()</code>: This will print a log of the entire blockchain to the console.</li>
+</ul>
+<pre class="language-javascript"><code class="language-javascript"><span class="token keyword">function</span> <span class="token function">Blockchain</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><br>  <span class="token comment">// The blockchain</span><br>  <span class="token keyword">let</span> chain <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">;</span><br><br>  <span class="token comment">// Add a block to the chain</span><br>  <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function-variable function">add</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><br><br>  <span class="token punctuation">}</span><br><br>  <span class="token comment">// Print the blockchain to the console</span><br>  <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function-variable function">print</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><br><br>  <span class="token punctuation">}</span><br><span class="token punctuation">}</span></code></pre>
+<h2>Adding a Block</h2>
+<p>Inside the <code>add()</code> method, we'll add a parameter named <code>data</code>. This is the data inside the block we want added to the blockchain.</p>
+<pre class="language-javascript"><code class="language-javascript">  <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function-variable function">add</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">data</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><br><br>  <span class="token punctuation">}</span></code></pre>
+<p>We need this method to do three things:</p>
+<ul>
+<li>Find the hash of the previous block on the chain</li>
+<li>Create the new block we want added to the chain (with the previous hash included in it)</li>
+<li>Push that new block onto the chain array</li>
+</ul>
+<p>To find the previous hash on the block we'll reference the <code>chain</code> and access the last block on it at index <code>[chain.length - 1]</code> and finally reference its <code>hash</code> property through dot notation.</p>
+<pre class="language-javascript"><code class="language-javascript"><span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function-variable function">add</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">data</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><br>    <span class="token keyword">let</span> previousHash <span class="token operator">=</span> chain<span class="token punctuation">[</span>chain<span class="token punctuation">.</span>length <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">.</span>hash<span class="token punctuation">;</span><br>    <br>  <span class="token punctuation">}</span></code></pre>
+<p>Using this <code>previousHash</code> value, we'll create a new block object essentially &quot;chaining&quot; it to the previous block and holding its own data from the <code>data</code> parameter.</p>
+<pre class="language-javascript"><code class="language-javascript">  <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function-variable function">add</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">data</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><br>    <span class="token keyword">let</span> previousHash <span class="token operator">=</span> chain<span class="token punctuation">[</span>chain<span class="token punctuation">.</span>length <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">.</span>hash<span class="token punctuation">;</span><br>    <span class="token keyword">let</span> block <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Block</span><span class="token punctuation">(</span>previousHash<span class="token punctuation">,</span> data<span class="token punctuation">)</span><span class="token punctuation">;</span><br><br>  <span class="token punctuation">}</span></code></pre>
+<p>Finally, we'll take that <code>block</code> object and push it onto the <code>chain</code>, finishing our <code>add()</code> method's functionality!</p>
+<pre class="language-javascript"><code class="language-javascript">  <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function-variable function">add</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">data</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><br>    <span class="token keyword">let</span> previousHash <span class="token operator">=</span> chain<span class="token punctuation">[</span>chain<span class="token punctuation">.</span>length <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">.</span>hash<span class="token punctuation">;</span><br>    <span class="token keyword">let</span> block <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Block</span><span class="token punctuation">(</span>previousHash<span class="token punctuation">,</span> data<span class="token punctuation">)</span><span class="token punctuation">;</span><br>    chain<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>block<span class="token punctuation">)</span><span class="token punctuation">;</span><br>  <span class="token punctuation">}</span></code></pre>
+<h3>The Genesis Block</h3>
+<p>The funny thing about adding a block, is that you need to have previous blocks on the chain. Because of this, a blockchain usually is created with a first or &quot;genesis&quot; block that all other blocks lead back to. Because our <code>add()</code> method needs a <code>previousHash</code> that won't exist initially, we can hardcode the create of our own genesis block when the blockchain object is instantiated.</p>
+<p>At the bottom of our <code>Blockchain()</code> function we'll add the following code:</p>
+<pre class="language-javascript"><code class="language-javascript">chain<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">Block</span><span class="token punctuation">(</span><span class="token string">'0'</span><span class="token punctuation">,</span> <span class="token string">'Genesis Block'</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<p>This will push our first block object onto the <code>chain</code> array with a <code>previousHash</code> of <code>'0'</code> and the <code>data</code> being simply <code>'Genesis Block'</code>. Now our first normal block we add will reference this genesis block's new hash and &quot;chain&quot; itself to it.</p>
+<h3>Initial Usage</h3>
+<p>If we open our <code>index.html</code> file in a new browser window and open the developer console, we can finally add blocks to our blockchain!</p>
+<pre class="language-javascript"><code class="language-javascript"><span class="token keyword">let</span> blockchain <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Blockchain</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><br>blockchain<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token string">'hello world'</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<p>But how do we know if it worked? How can we see our hard work chaining these blocks together? We'll need another method for that...</p>
+<h2>Printing the Blockchain</h2>
+<p>Inside our <code>print()</code> method, we only need one line of code, though it is a little complicated. We'll add it first and then I'll explain.</p>
+<pre class="language-javascript"><code class="language-javascript"><span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function-variable function">print</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><br>    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token constant">JSON</span><span class="token punctuation">.</span><span class="token function">stringify</span><span class="token punctuation">(</span>chain<span class="token punctuation">,</span> <span class="token keyword">null</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span><br>  <span class="token punctuation">}</span></code></pre>
+<p>The <code>console.log()</code> function call should be straightforward enough. It logs the argument to the console for us to see, but what exactly are we logging?</p>
+<p>In essence, we are logging the <code>chain</code> array (the blockchain we want to see) to the console. We just need to modify how it is handled by the <code>console.log()</code> function.</p>
+<p><code>JSON</code> is an object built into JavaScript that helps parse or analyze JavaScript Object Notation (JSON). We are using its <code>stringify()</code> method to convert our <code>chain</code> &quot;object&quot; into a &quot;string&quot; that can be logged and easily read at once.</p>
+<p>You can read more about this method and its parameters <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify">here</a> if you like or just use the adapted code above to nicely log our <code>chain</code> object as a string for us to enjoy.</p>
+<h1>Usage</h1>
+<p>Finally, our simple JavaScript blockchain is complete!</p>
+<p>Navigating back to the browser console, we can utilize our code in the following ways:</p>
+<h2>1) Instantiation</h2>
+<p>Create an instance of our blockchain object and initialize the Genesis Block to it.</p>
+<pre class="language-javascript"><code class="language-javascript"><span class="token keyword">let</span> blockchain <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Blockchain</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<h2>2) Adding a Block</h2>
+<p>Add any data we like to a new block and chain it to our immutable blockchain.</p>
+<pre class="language-javascript"><code class="language-javascript">blockchain<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token string">'hello world'</span><span class="token punctuation">)</span><span class="token punctuation">;</span><br>blockchain<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token string">'hello'</span><span class="token punctuation">,</span> <span class="token string">'world'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span><br>blockchain<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token punctuation">{</span> <span class="token literal-property property">message</span><span class="token operator">:</span> <span class="token string">'hello world'</span><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<h2>3) Printing our Blockchain</h2>
+<p>Log our blockchain array of block objects to the console.</p>
+<pre class="language-javascript"><code class="language-javascript">blockchain<span class="token punctuation">.</span><span class="token function">print</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><br><br><span class="token punctuation">[</span><br>  <span class="token punctuation">{</span><br>    <span class="token string-property property">"previousHash"</span><span class="token operator">:</span> <span class="token string">"0"</span><span class="token punctuation">,</span><br>    <span class="token string-property property">"data"</span><span class="token operator">:</span> <span class="token string">"Genesis Block"</span><span class="token punctuation">,</span><br>    <span class="token string-property property">"hash"</span><span class="token operator">:</span> <span class="token string">"6068c315b086271eee3bf312a4e2b3596f6e1f8b08f2bde0384b37d765f1d7c1"</span><br>  <span class="token punctuation">}</span><span class="token punctuation">,</span><br>  <span class="token punctuation">{</span><br>    <span class="token string-property property">"previousHash"</span><span class="token operator">:</span> <span class="token string">"6068c315b086271eee3bf312a4e2b3596f6e1f8b08f2bde0384b37d765f1d7c1"</span><span class="token punctuation">,</span><br>    <span class="token string-property property">"data"</span><span class="token operator">:</span> <span class="token string">"hello world"</span><span class="token punctuation">,</span><br>    <span class="token string-property property">"hash"</span><span class="token operator">:</span> <span class="token string">"7c0f4b696749784e1afcaa62f2476ae4c25a0960920cbf0122a41a989803baea"</span><br>  <span class="token punctuation">}</span><span class="token punctuation">,</span><br>  <span class="token punctuation">{</span><br>    <span class="token string-property property">"previousHash"</span><span class="token operator">:</span> <span class="token string">"7c0f4b696749784e1afcaa62f2476ae4c25a0960920cbf0122a41a989803baea"</span><span class="token punctuation">,</span><br>    <span class="token string-property property">"data"</span><span class="token operator">:</span> <span class="token punctuation">[</span><br>      <span class="token string">"hello"</span><span class="token punctuation">,</span><br>      <span class="token string">"world"</span><br>    <span class="token punctuation">]</span><span class="token punctuation">,</span><br>    <span class="token string-property property">"hash"</span><span class="token operator">:</span> <span class="token string">"bb724ed2e9c6f7a3cf51459f06b570833b1bdaf30e51aab6e3d33859b1207d14"</span><br>  <span class="token punctuation">}</span><span class="token punctuation">,</span><br>  <span class="token punctuation">{</span><br>    <span class="token string-property property">"previousHash"</span><span class="token operator">:</span> <span class="token string">"bb724ed2e9c6f7a3cf51459f06b570833b1bdaf30e51aab6e3d33859b1207d14"</span><span class="token punctuation">,</span><br>    <span class="token string-property property">"data"</span><span class="token operator">:</span> <span class="token punctuation">{</span><br>      <span class="token string-property property">"message"</span><span class="token operator">:</span> <span class="token string">"hello world"</span><br>    <span class="token punctuation">}</span><span class="token punctuation">,</span><br>    <span class="token string-property property">"hash"</span><span class="token operator">:</span> <span class="token string">"252f30a80d37da4731bed4ad4b0fb900a197c061678c87a7a757d86dce35642b"</span><br>  <span class="token punctuation">}</span><br><span class="token punctuation">]</span></code></pre>
+<h1>Conclusion</h1>
+<p>There you have it. I simple (very simple) implementation of blockchain technology. I hope you enjoyed this initial foray into the potential future of the world wide web!</p>
+<pre class="language-javascript"><code class="language-javascript"><span class="token comment">// Block Object</span><br><span class="token keyword">function</span> <span class="token function">Block</span><span class="token punctuation">(</span><span class="token parameter">previousHash<span class="token punctuation">,</span> data</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><br>  <span class="token keyword">this</span><span class="token punctuation">.</span>previousHash <span class="token operator">=</span> previousHash<span class="token punctuation">;</span><br>  <span class="token keyword">this</span><span class="token punctuation">.</span>data <span class="token operator">=</span> data<span class="token punctuation">;</span><br>  <span class="token keyword">this</span><span class="token punctuation">.</span>hash <span class="token operator">=</span> <span class="token constant">SHA256</span><span class="token punctuation">(</span><span class="token constant">JSON</span><span class="token punctuation">.</span><span class="token function">stringify</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span><br><span class="token punctuation">}</span><br><br><span class="token comment">// Blockchain Object</span><br><span class="token keyword">function</span> <span class="token function">Blockchain</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><br><br>  <span class="token comment">// Chain of all blocks</span><br>  <span class="token keyword">let</span> chain <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">;</span><br><br>  <span class="token comment">// Add block to chain</span><br>  <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function-variable function">add</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">data</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><br>    <span class="token keyword">let</span> previousHash <span class="token operator">=</span> chain<span class="token punctuation">[</span>chain<span class="token punctuation">.</span>length <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">.</span>hash<span class="token punctuation">;</span><br>    <span class="token keyword">let</span> block <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Block</span><span class="token punctuation">(</span>previousHash<span class="token punctuation">,</span> data<span class="token punctuation">)</span><span class="token punctuation">;</span><br>    chain<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>block<span class="token punctuation">)</span><span class="token punctuation">;</span><br>  <span class="token punctuation">}</span><br><br>  <span class="token comment">// Print chain to console</span><br>  <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function-variable function">print</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><br>    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token constant">JSON</span><span class="token punctuation">.</span><span class="token function">stringify</span><span class="token punctuation">(</span>chain<span class="token punctuation">,</span> <span class="token keyword">null</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span><br>  <span class="token punctuation">}</span><br><br>  <span class="token comment">// Add Genesis Block</span><br>  chain<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">Block</span><span class="token punctuation">(</span><span class="token string">'0'</span><span class="token punctuation">,</span> <span class="token string">'Genesis Block'</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span><br><span class="token punctuation">}</span></code></pre>
+
+	</div>
+
+	<!--Tags -->
+	<div class="text-base md:text-sm text-gray-500 px-4 py-6">
+		Tags: <a href="#" class="text-base md:text-sm text-green-500 no-underline hover:underline">Link</a> . <a href="#" class="text-base md:text-sm text-green-500 no-underline hover:underline">Link</a>
+	</div>
+</div>
+
+		</div>
+
+		<footer class="bg-white border-t border-gray-400 shadow">
+			<div class="container max-w-4xl mx-auto flex py-8">
+				<div class="w-full mx-auto flex flex-wrap">
+					<div class="flex w-full md:w-1/2 ">
+						<div class="px-8">
+							<h3 class="font-bold text-gray-900">About</h3>
+							<p class="py-4 text-gray-600 text-sm">
+								Hi. My name is Andrew.<br />I'm a front-end-web and JavaScript developer.
+							</p>
+							<small class="text-gray-600 text-sm">&copy; 2021-<script>document.write(new Date().getFullYear())</script> Andrew Bruner</small>
+						</div>
+					</div>
+					<div class="flex w-full md:w-1/2">
+						<div class="px-8">
+							<h3 class="font-bold text-gray-900">Social</h3>
+							<ul class="list-reset items-center text-sm pt-3">
+								<li>
+									<a class="inline-block text-gray-600 no-underline hover:text-gray-900 hover:text-underline py-1" href="https://github.com/andrewbruner">GitHub</a>
+								</li>
+								<li>
+									<a class="inline-block text-gray-600 no-underline hover:text-gray-900 hover:text-underline py-1" href="https://fosstodon.org/@andrewbruner">Mastodon</a>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</footer>
+
+		<script>
+			/* Progress bar */
+			//Source: https://alligator.io/js/progress-bar-javascript-css-variables/
+			var h = document.documentElement,
+			b = document.body,
+			st = 'scrollTop',
+			sh = 'scrollHeight',
+			progress = document.querySelector('#progress'),
+			scroll;
+			var scrollpos = window.scrollY;
+			var header = document.getElementById("header");
+			var navcontent = document.getElementById("nav-content");
+
+			document.addEventListener('scroll', function() {
+
+				/*Refresh scroll % width*/
+				scroll = (h[st] || b[st]) / ((h[sh] || b[sh]) - h.clientHeight) * 100;
+				progress.style.setProperty('--scroll', scroll + '%');
+
+				/*Apply classes for slide in bar*/
+				scrollpos = window.scrollY;
+
+				if (scrollpos > 10) {
+					header.classList.remove('bg-gray-100');
+					header.classList.add("bg-white");
+					header.classList.add("shadow");
+					navcontent.classList.remove("bg-gray-100");
+					navcontent.classList.add("bg-white");
+				} else {
+					header.classList.remove("bg-white");
+					header.classList.add('bg-gray-100');
+					header.classList.remove("shadow");
+					navcontent.classList.remove("bg-white");
+					navcontent.classList.add("bg-gray-100");
+				}
+			});
+
+			//Javascript to toggle the menu
+			document.getElementById('nav-toggle').onclick = function() {
+				document.getElementById("nav-content").classList.toggle("hidden");
+				if (window.scrollY <= 10) {
+					document.querySelector('#header').classList.toggle('shadow');
+				}
+			}
+		</script>
+		<script>
+			/*Apply tailwind classes for post-content*/
+			const h1List = document.querySelectorAll('.post-content h1');
+			for (h1 of h1List) {
+				h1.classList.add('font-bold', 'font-sans', 'break-normal', 'text-gray-900', 'pt-6', 'pb-2', 'text-3xl', 'md:text-4xl');
+			}
+			const h2List = document.querySelectorAll('.post-content h2');
+			for (h2 of h2List) {
+				h2.classList.add('font-semibold', 'font-sans', 'break-normal', 'text-gray-900', 'py-2', 'text-2xl', 'md:text-3xl');
+			}
+			const h3List = document.querySelectorAll('.post-content h3');
+			for (h3 of h3List) {
+				h3.classList.add('font-medium', 'font-sans', 'break-normal', 'text-gray-900', 'py-2', 'text-xl', 'md:text-2xl');
+			}
+			const h4List = document.querySelectorAll('.post-content h4');
+			for (h4 of h4List) {
+				h4.classList.add('font-normal', 'font-sans', 'break-normal', 'text-gray-900', 'py-2', 'text-lg', 'md:text-xl');
+			}
+			const h5List = document.querySelectorAll('.post-content h5');
+			for (h5 of h5List) {
+				h5.classList.add('font-normal', 'font-sans', 'break-normal', 'text-gray-900', 'py-2', 'text-base', 'md:text-lg');
+			}
+			const h6List = document.querySelectorAll('.post-content h6');
+			for (h6 of h6List) {
+				h6.classList.add('font-normal', 'font-sans', 'break-normal', 'text-gray-900', 'py-2', 'text-base', 'md:text-base');
+			}
+			const pList = document.querySelectorAll('.post-content p');
+			for (p of pList) {
+				p.classList.add('py-6');
+			}
+			const ulList = document.querySelectorAll('.post-content ul');
+			for (ul of ulList) {
+				ul.classList.add('list-inside', 'sm:list-outside', 'list-disc');
+			}
+			const olList = document.querySelectorAll('.post-content ol');
+			for (ol of olList) {
+				ol.classList.add('list-inside', 'sm:list-outside', 'list-decimal');
+			}
+			const liList = document.querySelectorAll('.post-content li');
+			for (li of liList) {
+				li.classList.add('py-3');
+			}
+			const aList = document.querySelectorAll('.post-content a');
+			for (a of aList) {
+				a.classList.add('text-green-500', 'no-underline', 'hover:underline');
+			}
+			const blockquoteList = document.querySelectorAll('.post-content blockquote');
+			for (blockquote of blockquoteList) {
+				blockquote.classList.add('border-l-4', 'border-green-500', 'italic', 'my-8', 'pl-8', 'md:pl-12');
+			}
+			const preList = document.querySelectorAll('.post-content pre');
+			for (pre of preList) {
+				pre.classList.add('bg-gray-900', 'rounded', 'text-white', 'font-mono', 'text-base', 'p-2', 'md:p-4', 'my-6', 'overflow-x-auto');
+			}
+			const codeList = document.querySelectorAll('.post-content code');
+			for (code of codeList) {
+				if (code.parentElement.tagName.toLowerCase() !== 'pre') {
+					code.classList.add('break-words', 'whitespace-pre-wrap', 'p-1', 'text-base', 'bg-gray-300');
+				}
+			}
+		</script>
+	</body>
+</html>
