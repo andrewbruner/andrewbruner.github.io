@@ -1,0 +1,212 @@
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Andrew Bruner | Websites with Integrity</title>
+    <meta name="author" content="Andrew Bruner" />
+    <meta name="description" content="Front-end web and JavaScript developer" />
+    <meta name="keywords" content="developer,web developer,front-end,javascript" />
+		<link rel="stylesheet" href="./css/prism-vsc-dark-plus.css" />
+    <link rel="stylesheet" href="https://unpkg.com/tailwindcss@2.2.19/dist/tailwind.min.css" />
+  </head>
+
+	<body class="bg-gray-100 font-sans leading-normal tracking-normal">
+		<nav id="header" class="fixed w-full z-10 top-0 bg-gray-100">
+			<div id="progress" class="h-1 z-20 top-0" style="background:linear-gradient(to right, #4dc0b5 var(--scroll), transparent 0);"></div>
+			<div class="w-full md:max-w-4xl mx-auto flex flex-wrap items-center justify-between mt-0 py-3">
+				<div class="pl-4">
+					<a class="text-gray-900 text-base no-underline hover:no-underline font-extrabold text-xl" href="/">
+						Andrew Bruner
+					</a>
+				</div>
+				<div class="block lg:hidden pr-4">
+					<button id="nav-toggle" class="flex items-center px-3 py-2 border rounded text-gray-500 border-gray-600 hover:text-gray-900 hover:border-green-500 appearance-none focus:outline-none">
+						<svg class="fill-current h-3 w-3" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+							<title>Menu</title>
+							<path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z" />
+						</svg>
+					</button>
+				</div>
+				<div class="w-full flex-grow lg:flex lg:items-center lg:w-auto hidden lg:block mt-2 lg:mt-0 bg-gray-100 md:bg-transparent z-20" id="nav-content">
+					<ul class="list-reset lg:flex justify-end flex-1 items-center">
+						<li class="mr-3">
+							<a class="inline-block py-2 px-4 text-gray-900 font-bold no-underline" href="/">Blog</a>
+						</li>
+						<li class="mr-3">
+							<a class="inline-block text-gray-600 no-underline hover:text-gray-900 hover:text-underline py-2 px-4" href="https://github.com/andrewbruner">GitHub</a>
+						</li>
+						<li class="mr-3">
+							<a class="inline-block text-gray-600 no-underline hover:text-gray-900 hover:text-underline py-2 px-4" href="https://fosstodon.org/@andrewbruner">Mastodon</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+
+		<div class="container w-full md:max-w-3xl mx-auto pt-20">
+		
+<div class="w-full px-4 md:px-6 text-xl text-gray-800 leading-normal">
+	<!--Title-->
+	<div class="font-sans">
+		<h1 class="font-bold font-sans break-normal text-gray-900 pt-6 pb-2 text-3xl md:text-4xl">Websites with Integrity</h1>
+		<p class="text-sm md:text-base font-normal text-gray-600">Published 22 August 2021</p>
+	</div>
+
+	<!--Post Content-->
+	<div class="post-content">
+		<p>I was recently listening to a podcast episode of <a href="https://syntax.fm/show/379/hasty-treat-the-weird-and-wonderful-less-than-link-greater-than-tag">Syntax</a> where the subject of HTML <code>&lt;link&gt;</code> tags was discussed. One of the many reasons we may use link tags is to <em>link</em> our page to another document, like a CSS stylesheet, a web font, or a file from a content delivery network (CDN). The latter may look something like this:</p>
+<pre class="language-html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>link</span> <span class="token attr-name">href</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css<span class="token punctuation">"</span></span><br><span class="token attr-name">rel</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>stylesheet<span class="token punctuation">"</span></span><br><span class="token attr-name">integrity</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We<span class="token punctuation">"</span></span><br><span class="token attr-name">crossorigin</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>anonymous<span class="token punctuation">"</span></span><span class="token punctuation">></span></span></code></pre>
+<p>That third line is an interesting one. What does the attribute <em>integrity</em> mean and what's with all those letters and numbers?</p>
+<p>That, my friends, is called <strong>subresource integrity</strong>, and it is an amazing security feature. It verifies that the resource you are importing into your site is actually the one you think it is. In my <a href="https://andrewbruner.hashnode.dev/building-a-simple-javascript-blockchain">previous post</a>, I mentioned the concept of a secure hashing algorithm (SHA): a cryptographic &quot;hashing&quot; function that takes a string of any length and converts it into a fixed-length &quot;hash value&quot;. It only works one way and is therefore secure for passwords or anything you don't want someone to guess or know. It's also great to know if that string (or an entire document in our case) has been changed, for good or bad.</p>
+<p>Say a popular CDN is hacked and code is inserted that forces thousands of other machines that access it to mine cryptocurrencies for the malicious party. A simple <code>integrity</code> attribute can enable the browser using that resource to know if has been changed. It uses a specific subresource integrity (SRI) hashing algorithm to check that the resource being imported matches the predefined hash value and if it doesn't, the browser declines to import it.</p>
+<p>This long, weird-looking line of code has befuddled me in the past, but I hope that if it's looked foreign to you before, it's a little plainer now. Security on today's world wide web is crucial, but even with all the dishonest players in the game, it's nice to know we can still have a little <em>integrity</em>.</p>
+
+	</div>
+
+	<!--Tags -->
+	<div class="text-base md:text-sm text-gray-500 px-4 py-6">
+		Tags: <a href="#" class="text-base md:text-sm text-green-500 no-underline hover:underline">Link</a> . <a href="#" class="text-base md:text-sm text-green-500 no-underline hover:underline">Link</a>
+	</div>
+</div>
+
+		</div>
+
+		<footer class="bg-white border-t border-gray-400 shadow">
+			<div class="container max-w-4xl mx-auto flex py-8">
+				<div class="w-full mx-auto flex flex-wrap">
+					<div class="flex w-full md:w-1/2 ">
+						<div class="px-8">
+							<h3 class="font-bold text-gray-900">About</h3>
+							<p class="py-4 text-gray-600 text-sm">
+								Hi. My name is Andrew.<br />I'm a front-end-web and JavaScript developer.
+							</p>
+							<small class="text-gray-600 text-sm">&copy; 2021-<script>document.write(new Date().getFullYear())</script> Andrew Bruner</small>
+						</div>
+					</div>
+					<div class="flex w-full md:w-1/2">
+						<div class="px-8">
+							<h3 class="font-bold text-gray-900">Social</h3>
+							<ul class="list-reset items-center text-sm pt-3">
+								<li>
+									<a class="inline-block text-gray-600 no-underline hover:text-gray-900 hover:text-underline py-1" href="https://github.com/andrewbruner">GitHub</a>
+								</li>
+								<li>
+									<a class="inline-block text-gray-600 no-underline hover:text-gray-900 hover:text-underline py-1" href="https://fosstodon.org/@andrewbruner">Mastodon</a>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</footer>
+
+		<script>
+			/* Progress bar */
+			//Source: https://alligator.io/js/progress-bar-javascript-css-variables/
+			var h = document.documentElement,
+			b = document.body,
+			st = 'scrollTop',
+			sh = 'scrollHeight',
+			progress = document.querySelector('#progress'),
+			scroll;
+			var scrollpos = window.scrollY;
+			var header = document.getElementById("header");
+			var navcontent = document.getElementById("nav-content");
+
+			document.addEventListener('scroll', function() {
+
+				/*Refresh scroll % width*/
+				scroll = (h[st] || b[st]) / ((h[sh] || b[sh]) - h.clientHeight) * 100;
+				progress.style.setProperty('--scroll', scroll + '%');
+
+				/*Apply classes for slide in bar*/
+				scrollpos = window.scrollY;
+
+				if (scrollpos > 10) {
+					header.classList.remove('bg-gray-100');
+					header.classList.add("bg-white");
+					header.classList.add("shadow");
+					navcontent.classList.remove("bg-gray-100");
+					navcontent.classList.add("bg-white");
+				} else {
+					header.classList.remove("bg-white");
+					header.classList.add('bg-gray-100');
+					header.classList.remove("shadow");
+					navcontent.classList.remove("bg-white");
+					navcontent.classList.add("bg-gray-100");
+				}
+			});
+
+			//Javascript to toggle the menu
+			document.getElementById('nav-toggle').onclick = function() {
+				document.getElementById("nav-content").classList.toggle("hidden");
+				if (window.scrollY <= 10) {
+					document.querySelector('#header').classList.toggle('shadow');
+				}
+			}
+		</script>
+		<script>
+			/*Apply tailwind classes for post-content*/
+			const h1List = document.querySelectorAll('.post-content h1');
+			for (h1 of h1List) {
+				h1.classList.add('font-bold', 'font-sans', 'break-normal', 'text-gray-900', 'pt-6', 'pb-2', 'text-3xl', 'md:text-4xl');
+			}
+			const h2List = document.querySelectorAll('.post-content h2');
+			for (h2 of h2List) {
+				h2.classList.add('font-semibold', 'font-sans', 'break-normal', 'text-gray-900', 'py-2', 'text-2xl', 'md:text-3xl');
+			}
+			const h3List = document.querySelectorAll('.post-content h3');
+			for (h3 of h3List) {
+				h3.classList.add('font-medium', 'font-sans', 'break-normal', 'text-gray-900', 'py-2', 'text-xl', 'md:text-2xl');
+			}
+			const h4List = document.querySelectorAll('.post-content h4');
+			for (h4 of h4List) {
+				h4.classList.add('font-normal', 'font-sans', 'break-normal', 'text-gray-900', 'py-2', 'text-lg', 'md:text-xl');
+			}
+			const h5List = document.querySelectorAll('.post-content h5');
+			for (h5 of h5List) {
+				h5.classList.add('font-normal', 'font-sans', 'break-normal', 'text-gray-900', 'py-2', 'text-base', 'md:text-lg');
+			}
+			const h6List = document.querySelectorAll('.post-content h6');
+			for (h6 of h6List) {
+				h6.classList.add('font-normal', 'font-sans', 'break-normal', 'text-gray-900', 'py-2', 'text-base', 'md:text-base');
+			}
+			const pList = document.querySelectorAll('.post-content p');
+			for (p of pList) {
+				p.classList.add('py-6');
+			}
+			const ulList = document.querySelectorAll('.post-content ul');
+			for (ul of ulList) {
+				ul.classList.add('list-inside', 'sm:list-outside', 'list-disc');
+			}
+			const olList = document.querySelectorAll('.post-content ol');
+			for (ol of olList) {
+				ol.classList.add('list-inside', 'sm:list-outside', 'list-decimal');
+			}
+			const liList = document.querySelectorAll('.post-content li');
+			for (li of liList) {
+				li.classList.add('py-3');
+			}
+			const aList = document.querySelectorAll('.post-content a');
+			for (a of aList) {
+				a.classList.add('text-green-500', 'no-underline', 'hover:underline');
+			}
+			const blockquoteList = document.querySelectorAll('.post-content blockquote');
+			for (blockquote of blockquoteList) {
+				blockquote.classList.add('border-l-4', 'border-green-500', 'italic', 'my-8', 'pl-8', 'md:pl-12');
+			}
+			const preList = document.querySelectorAll('.post-content pre');
+			for (pre of preList) {
+				pre.classList.add('bg-gray-900', 'rounded', 'text-white', 'font-mono', 'text-base', 'p-2', 'md:p-4', 'my-6', 'overflow-x-auto');
+			}
+			const codeList = document.querySelectorAll('.post-content code');
+			for (code of codeList) {
+				if (code.parentElement.tagName.toLowerCase() !== 'pre') {
+					code.classList.add('break-words', 'whitespace-pre-wrap', 'p-1', 'text-base', 'bg-gray-300');
+				}
+			}
+		</script>
+	</body>
+</html>
